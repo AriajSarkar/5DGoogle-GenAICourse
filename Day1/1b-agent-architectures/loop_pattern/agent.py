@@ -13,9 +13,10 @@ Concepts covered:
 - Nested workflow (Sequential with Loop inside)
 """
 
+from utils.model_config import get_text_model
+
 from google.adk.agents import Agent, LoopAgent, SequentialAgent
 from google.adk.tools import FunctionTool
-
 
 def exit_loop():
     """
@@ -29,23 +30,21 @@ def exit_loop():
         "message": "Story approved. Exiting refinement loop."
     }
 
-
 def create_initial_writer():
     """Initial Writer Agent: Creates the first draft."""
     return Agent(
         name="InitialWriterAgent",
-        model="gemini-2.5-flash",
+        model=get_text_model(),
         instruction="""Based on the user's prompt, write the first draft of a short story 
         (around 100-150 words). Output only the story text, with no introduction or explanation.""",
         output_key="current_story",
     )
 
-
 def create_critic_agent():
     """Critic Agent: Reviews and critiques the story."""
     return Agent(
         name="CriticAgent",
-        model="gemini-2.5-flash",
+        model=get_text_model(),
         instruction="""You are a constructive story critic. Review the story provided below.
         Story: {current_story}
         
@@ -55,12 +54,11 @@ def create_critic_agent():
         output_key="critique",
     )
 
-
 def create_refiner_agent():
     """Refiner Agent: Improves the story OR exits the loop."""
     return Agent(
         name="RefinerAgent",
-        model="gemini-2.5-flash",
+        model=get_text_model(),
         instruction="""You are a story refiner. You have a story draft and critique.
         
         Story Draft: {current_story}
@@ -72,7 +70,6 @@ def create_refiner_agent():
         output_key="current_story",
         tools=[FunctionTool(exit_loop)],
     )
-
 
 # Root agent: Nested workflow (Initial draft → Refinement loop)
 # Architecture:

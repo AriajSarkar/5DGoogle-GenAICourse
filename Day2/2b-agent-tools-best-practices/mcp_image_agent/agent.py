@@ -12,13 +12,14 @@ Demonstrates:
 NOTE: Requires Node.js/npm installed for MCP server
 """
 
+from utils.model_config import get_multimodal_model
+
 from google.genai import types
 from google.adk.agents import LlmAgent
 from google.adk.models.google_llm import Gemini
 from google.adk.tools.mcp_tool.mcp_toolset import McpToolset
 from google.adk.tools.mcp_tool.mcp_session_manager import StdioConnectionParams
 from mcp import StdioServerParameters
-
 
 # Configure retry options
 retry_config = types.HttpRetryOptions(
@@ -27,7 +28,6 @@ retry_config = types.HttpRetryOptions(
     initial_delay=1,
     http_status_codes=[429, 500, 503, 504],
 )
-
 
 # MCP Toolset - connects to Everything MCP Server
 # This server provides getTinyImage tool for testing MCP integration
@@ -49,10 +49,9 @@ mcp_image_server = McpToolset(
     )
 )
 
-
 # Create image agent with MCP integration
 root_agent = LlmAgent(
-    model=Gemini(model="gemini-2.5-flash", retry_options=retry_config),
+    model=Gemini(model=get_multimodal_model(), retry_options=retry_config),
     name="image_agent",
     instruction="""You are an image generation assistant.
     
@@ -65,7 +64,6 @@ root_agent = LlmAgent(
     """,
     tools=[mcp_image_server],
 )
-
 
 # NOTE: To display the image in production:
 # 1. Extract base64 data from tool response

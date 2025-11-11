@@ -12,11 +12,12 @@ Concepts covered:
 - Complex task handling
 """
 
+from utils.model_config import get_text_model
+
 from google.adk.agents import Agent
 from google.adk.tools.google_search_tool import GoogleSearchTool
 from datetime import datetime
 import pytz
-
 
 def get_current_time(city: str) -> dict:
     """Returns the current time in a specified city."""
@@ -43,7 +44,6 @@ def get_current_time(city: str) -> dict:
             "city": city,
             "message": "City not found"
         }
-
 
 def calculate_time_difference(city1: str, city2: str) -> dict:
     """
@@ -91,11 +91,10 @@ def calculate_time_difference(city1: str, city2: str) -> dict:
             "message": "One or both cities not found"
         }
 
-
 # Root agent with multiple tools (custom + built-in)
 root_agent = Agent(
     name="multi_tool_assistant",
-    model="gemini-2.5-flash",
+    model=get_text_model(),
     description="A versatile agent with time, calculation, and search capabilities.",
     instruction=(
         "You are a helpful assistant with multiple capabilities:\n"

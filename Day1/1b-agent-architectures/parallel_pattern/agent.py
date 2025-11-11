@@ -13,15 +13,16 @@ Concepts covered:
 - Nested workflow patterns (Parallel inside Sequential)
 """
 
+from utils.model_config import get_text_model
+
 from google.adk.agents import Agent, ParallelAgent, SequentialAgent
 from google.adk.tools import google_search
-
 
 def create_tech_researcher():
     """Tech Researcher: Focuses on AI/ML trends."""
     return Agent(
         name="TechResearcher",
-        model="gemini-2.5-flash",
+        model=get_text_model(),
         instruction="""Research the latest AI/ML trends. Include 3 key developments,
         the main companies involved, and the potential impact. Keep the report 
         very concise (100 words).""",
@@ -29,12 +30,11 @@ def create_tech_researcher():
         output_key="tech_research",
     )
 
-
 def create_health_researcher():
     """Health Researcher: Focuses on medical breakthroughs."""
     return Agent(
         name="HealthResearcher",
-        model="gemini-2.5-flash",
+        model=get_text_model(),
         instruction="""Research recent medical breakthroughs. Include 3 significant advances,
         their practical applications, and estimated timelines. Keep the report 
         concise (100 words).""",
@@ -42,19 +42,17 @@ def create_health_researcher():
         output_key="health_research",
     )
 
-
 def create_finance_researcher():
     """Finance Researcher: Focuses on fintech trends."""
     return Agent(
         name="FinanceResearcher",
-        model="gemini-2.5-flash",
+        model=get_text_model(),
         instruction="""Research current fintech trends. Include 3 key trends,
         their market implications, and the future outlook. Keep the report 
         concise (100 words).""",
         tools=[google_search],
         output_key="finance_research",
     )
-
 
 def create_aggregator_agent():
     """
@@ -65,7 +63,7 @@ def create_aggregator_agent():
     """
     return Agent(
         name="AggregatorAgent",
-        model="gemini-2.5-flash",
+        model=get_text_model(),
         instruction="""Combine these three research findings into a single executive summary:
 
         **Technology Trends:**
@@ -82,7 +80,6 @@ def create_aggregator_agent():
         200 words.""",
         output_key="executive_summary",
     )
-
 
 # Root agent: Nested workflow (Parallel → Sequential)
 # Architecture:

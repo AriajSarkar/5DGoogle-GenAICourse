@@ -10,15 +10,17 @@ Concepts covered:
 - Using ADK's built-in tools
 - Google Search integration
 - Handling real-time information queries
+- Environment-based model configuration
 """
 
+from utils.model_config import get_text_model
 from google.adk.agents import Agent
 from google.adk.tools.google_search_tool import GoogleSearchTool
 
 # Root agent with Google Search capability
 root_agent = Agent(
     name="search_assistant",
-    model="gemini-2.5-flash",
+    model=get_text_model(),  # From env: GEMINI_TEXT_MODEL or default
     description="An agent that can search Google for current information.",
     instruction=(
         "You are a helpful assistant with access to Google Search. "

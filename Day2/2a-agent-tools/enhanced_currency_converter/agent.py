@@ -10,12 +10,13 @@ Demonstrates:
 - Multi-agent coordination (currency agent + calculation agent)
 """
 
+from utils.model_config import get_text_model
+
 from google.genai import types
 from google.adk.agents import LlmAgent
 from google.adk.models.google_llm import Gemini
 from google.adk.tools import AgentTool
 from google.adk.code_executors import BuiltInCodeExecutor
-
 
 # Configure retry options
 retry_config = types.HttpRetryOptions(
@@ -24,7 +25,6 @@ retry_config = types.HttpRetryOptions(
     initial_delay=1,
     http_status_codes=[429, 500, 503, 504],
 )
-
 
 def get_fee_for_payment_method(method: str) -> dict:
     """Looks up the transaction fee percentage for a given payment method.
@@ -49,7 +49,6 @@ def get_fee_for_payment_method(method: str) -> dict:
             "status": "error",
             "error_message": f"Payment method '{method}' not found",
         }
-
 
 def get_exchange_rate(base_currency: str, target_currency: str) -> dict:
     """Looks up and returns the exchange rate between two currencies.
@@ -81,11 +80,10 @@ def get_exchange_rate(base_currency: str, target_currency: str) -> dict:
             "error_message": f"Unsupported currency pair: {base_currency}/{target_currency}",
         }
 
-
 # Calculation agent - generates Python code for precise math
 calculation_agent = LlmAgent(
     name="CalculationAgent",
-    model=Gemini(model="gemini-2.5-flash", retry_options=retry_config),
+    model=Gemini(model=get_text_model(), retry_options=retry_config),
     instruction="""You are a specialized calculator that ONLY responds with Python code.
     
     **RULES:**
@@ -100,11 +98,10 @@ calculation_agent = LlmAgent(
     code_executor=BuiltInCodeExecutor(),
 )
 
-
 # Enhanced currency agent that delegates calculations
 root_agent = LlmAgent(
     name="enhanced_currency_agent",
-    model=Gemini(model="gemini-2.5-flash", retry_options=retry_config),
+    model=Gemini(model=get_text_model(), retry_options=retry_config),
     instruction="""You are a smart currency conversion assistant. You must strictly follow these steps.
 
     For any currency conversion request:

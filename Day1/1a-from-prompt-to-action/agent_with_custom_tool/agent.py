@@ -12,10 +12,11 @@ Concepts covered:
 - Tool usage in ADK app structure
 """
 
+from utils.model_config import get_text_model
+
 from google.adk.agents import Agent
 from datetime import datetime
 import pytz
-
 
 def get_current_time(city: str) -> dict:
     """
@@ -58,7 +59,6 @@ def get_current_time(city: str) -> dict:
             "message": "City not found in database. Please try a major city."
         }
 
-
 def get_weather_info(city: str) -> dict:
     """
     Mock function that returns weather information for a city.
@@ -79,11 +79,10 @@ def get_weather_info(city: str) -> dict:
         "note": "This is mock data for demonstration"
     }
 
-
 # Root agent with custom tools
 root_agent = Agent(
     name="time_weather_assistant",
-    model="gemini-2.5-flash",
+    model=get_text_model(),
     description="An agent that can tell time and weather for cities.",
     instruction=(
         "You are a helpful assistant that provides time and weather information. "

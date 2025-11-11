@@ -10,18 +10,20 @@ Concepts covered:
 - Creating an Agent for use with adk run
 - Proper root_agent structure
 - ADK app folder organization
+- Environment-based model configuration
 
 Based on Kaggle 5-Day Agents Course - Day 1a
 Copyright 2025 Google LLC - Licensed under Apache 2.0
 """
 
+from utils.model_config import get_text_model
 from google.adk.agents import Agent
 
 # This is the root agent that adk run expects
-# Note: Using gemini-2.5-flash (supports tools) instead of Kaggle's gemini-2.5-flash-lite
+# Uses environment-based model configuration (default: gemini-2.5-flash-lite)
 root_agent = Agent(
     name="basic_assistant",
-    model="gemini-2.5-flash",
+    model=get_text_model(),  # From env: GEMINI_TEXT_MODEL or default
     description="A simple agent that answers questions using only LLM knowledge.",
     instruction="You are a helpful assistant. Answer questions clearly and concisely.",
 )

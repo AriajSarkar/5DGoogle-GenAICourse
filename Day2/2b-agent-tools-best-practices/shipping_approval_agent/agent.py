@@ -13,13 +13,14 @@ Demonstrates:
 This agent handles shipping orders with approval for large orders (>5 containers).
 """
 
+from utils.model_config import get_text_model
+
 from google.genai import types
 from google.adk.agents import LlmAgent
 from google.adk.models.google_llm import Gemini
 from google.adk.tools.function_tool import FunctionTool
 from google.adk.tools.tool_context import ToolContext
 from google.adk.apps.app import App, ResumabilityConfig
-
 
 # Configure retry options
 retry_config = types.HttpRetryOptions(
@@ -29,9 +30,7 @@ retry_config = types.HttpRetryOptions(
     http_status_codes=[429, 500, 503, 504],
 )
 
-
 LARGE_ORDER_THRESHOLD = 5
-
 
 def place_shipping_order(
     num_containers: int, destination: str, tool_context: ToolContext
@@ -87,13 +86,12 @@ def place_shipping_order(
             "message": f"Order rejected: {num_containers} containers to {destination}",
         }
 
-
 # Create shipping agent with pausable tool
 # For ADK CLI (adk run), expose the agent directly
 # For programmatic use with workflow, wrap in App (see reference script)
 root_agent = LlmAgent(
     name="shipping_agent",
-    model=Gemini(model="gemini-2.5-flash", retry_options=retry_config),
+    model=Gemini(model=get_text_model(), retry_options=retry_config),
     instruction="""You are a shipping coordinator assistant.
     
     When users request to ship containers:
@@ -111,7 +109,6 @@ root_agent = LlmAgent(
     """,
     tools=[FunctionTool(func=place_shipping_order)],
 )
-
 
 # For programmatic use with approval workflow:
 # Wrap the agent in a resumable App to enable pause/resume

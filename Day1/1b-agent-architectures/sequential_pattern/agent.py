@@ -13,8 +13,9 @@ Concepts covered:
 - Fixed, predictable workflows in ADK app structure
 """
 
-from google.adk.agents import Agent, SequentialAgent
+from utils.model_config import get_text_model
 
+from google.adk.agents import Agent, SequentialAgent
 
 def create_outline_agent():
     """
@@ -22,7 +23,7 @@ def create_outline_agent():
     """
     return Agent(
         name="OutlineAgent",
-        model="gemini-2.5-flash",
+        model=get_text_model(),
         instruction="""Create a blog outline for the given topic with:
         1. A catchy headline
         2. An introduction hook
@@ -30,7 +31,6 @@ def create_outline_agent():
         4. A concluding thought""",
         output_key="blog_outline",
     )
-
 
 def create_writer_agent():
     """
@@ -40,12 +40,11 @@ def create_writer_agent():
     """
     return Agent(
         name="WriterAgent",
-        model="gemini-2.5-flash",
+        model=get_text_model(),
         instruction="""Following this outline strictly: {blog_outline}
         Write a brief, 200 to 300-word blog post with an engaging and informative tone.""",
         output_key="blog_draft",
     )
-
 
 def create_editor_agent():
     """
@@ -55,13 +54,12 @@ def create_editor_agent():
     """
     return Agent(
         name="EditorAgent",
-        model="gemini-2.5-flash",
+        model=get_text_model(),
         instruction="""Edit this draft: {blog_draft}
         Your task is to polish the text by fixing any grammatical errors, improving 
         the flow and sentence structure, and enhancing overall clarity.""",
         output_key="final_blog",
     )
-
 
 # Root agent: Sequential pipeline (Outline → Write → Edit)
 root_agent = SequentialAgent(

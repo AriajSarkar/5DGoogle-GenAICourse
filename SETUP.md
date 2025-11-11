@@ -45,12 +45,18 @@ Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 ### Step 3: Install Dependencies
 
 ```powershell
+# Install required packages
 pip install -r requirements.txt
+
+# Install this project (so utils/ is importable)
+pip install -e .
 ```
 
 This installs:
 - `google-adk` - The Agent Development Kit
+- `python-dotenv` - Auto-loads .env file
 - `pytz` - Timezone support for examples
+- **Your project** - Makes `utils/` importable (fixes "No module named 'utils'" errors)
 
 ### Step 4: Configure Your API Key
 
@@ -68,9 +74,18 @@ export GOOGLE_API_KEY="your-api-key-here"
 # Copy the example file
 copy .env.example .env
 
-# Edit .env and add your API key
+# Edit .env and add your keys:
 # GOOGLE_API_KEY=AIza...your-key-here
+# GEMINI_TEXT_MODEL=gemini-2.5-flash-lite
+# GEMINI_MULTIMODAL_MODEL=gemini-2.0-flash-preview-image-generation
+# GEMINI_PRO_MODEL=gemini-2.5-pro
 ```
+
+**⚠️ Required Variables:**
+- `GOOGLE_API_KEY` - Your API key from Google AI Studio
+- `GEMINI_TEXT_MODEL` - Model for text agents (11/12 agents)
+- `GEMINI_MULTIMODAL_MODEL` - Model for image generation agents
+- `GEMINI_PRO_MODEL` - Premium model option
 
 ### Step 5: Test Your Setup
 

@@ -70,12 +70,22 @@ source .venv/bin/activate      # Linux/Mac
 # 3. Install dependencies
 pip install -r requirements.txt
 
-# 4. Set your API key
-$env:GOOGLE_API_KEY="your-api-key-here"  # Windows
-export GOOGLE_API_KEY="your-api-key-here"  # Linux/Mac
+# 4. ⚠️ IMPORTANT: Install this project (makes utils/ importable)
+pip install -e .
+
+# 5. Configure environment variables
+copy .env.example .env  # Then edit .env with your keys
 ```
 
-**💡 Tip:** For permanent API key, copy `.env.example` to `.env` and add your key!
+**⚠️ CRITICAL STEP:** The `pip install -e .` command is **required** to avoid "No module named 'utils'" errors!
+
+**Required in `.env` file:**
+```bash
+GOOGLE_API_KEY=AIza...your-key-here
+GEMINI_TEXT_MODEL=gemini-2.5-flash-lite
+GEMINI_MULTIMODAL_MODEL=gemini-2.0-flash-preview-image-generation
+GEMINI_PRO_MODEL=gemini-2.5-pro
+```
 
 ### 3. Run Your First Agent!
 
