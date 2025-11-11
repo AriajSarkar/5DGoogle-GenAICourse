@@ -1,0 +1,94 @@
+# Attribution and License Information
+
+## Original Source
+
+This course is based on the **Kaggle 5-Day Agents Course** created by Google LLC.
+
+**Original Course:**
+- Platform: Kaggle
+- Title: "5-Day Agents Course"
+- Author: Kristopher Overholt (Google LLC)
+- License: Apache License 2.0
+
+**Original Notebooks:**
+- Day 1a: "Your First AI Agent: From Prompt to Action"
+- Day 1b: "Multi-Agent Systems & Workflow Patterns"
+
+## Modifications
+
+This repository contains **adapted and extended** versions of the original course materials:
+
+### Changes Made:
+1. **Environment Setup**: Converted from Kaggle notebook environment to local Python development
+   - Replaced `kaggle_secrets.UserSecretsClient` with local `.env` file configuration
+   - Removed Kaggle-specific proxy URL helpers
+   - Added virtual environment setup instructions
+
+2. **Model Configuration**: Updated from Kaggle's default to local configuration
+   - Changed from `gemini-2.5-flash-lite` to `gemini-2.5-flash`
+   - Added model compatibility testing and documentation
+   - Documented that `gemini-2.5-flash` now supports function calling (2025 update)
+
+3. **Project Structure**: Reorganized for local development
+   - Created standalone Python scripts (`.py` files) for quick testing
+   - Created ADK app folders (with `agent.py` + `__init__.py`) for `adk run` compatibility
+   - Added comprehensive setup documentation (SETUP.md, README.md)
+   - Created ADK CLI usage guide (ADK_USAGE_GUIDE.md)
+
+4. **Documentation Enhancements**:
+   - Added detailed README files for each module
+   - Created AI agent instructions (.github/copilot-instructions.md)
+   - Added troubleshooting guides
+   - Created comparison tables and decision trees
+
+5. **Educational Structure**:
+   - Maintained core learning objectives and concepts
+   - Preserved all 4 multi-agent workflow patterns (LLM Coordinator, Sequential, Parallel, Loop)
+   - Kept educational comments and docstrings
+   - Added reference scripts for code study
+
+## License
+
+This work is licensed under the **Apache License 2.0**, same as the original course materials.
+
+```
+Copyright 2025 Google LLC
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
+
+## Usage Rights
+
+Under the Apache 2.0 License, you are free to:
+✅ **Use** this code commercially and non-commercially
+✅ **Modify** and create derivative works
+✅ **Distribute** original or modified versions
+✅ **Sublicense** under the same or compatible license
+
+### Requirements:
+- Include a copy of the Apache 2.0 License
+- State significant changes made to the original work
+- Retain copyright and attribution notices
+- Include this NOTICE file in distributions
+
+## Disclaimer
+
+This is an educational project adapted from Google's official course. While based on official materials, this specific implementation is maintained independently and may differ from the original Kaggle notebooks.
+
+For the official course, please visit: [Kaggle 5-Day Agents Course](https://www.kaggle.com/learn-guide/5-day-genai)
+
+## Contact
+
+For questions about:
+- **Original Course**: Contact Google LLC or Kaggle support
+- **This Repository**: Open an issue on GitHub
