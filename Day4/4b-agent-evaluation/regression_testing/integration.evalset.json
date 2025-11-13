@@ -1,0 +1,61 @@
+{
+  "eval_set_id": "regression_test_suite",
+  "eval_cases": [
+    {
+      "eval_id": "basic_light_control",
+      "conversation": [
+        {
+          "user_content": {
+            "parts": [
+              {"text": "Turn on the desk lamp in the office"}
+            ]
+          },
+          "final_response": {
+            "parts": [
+              {"text": "Successfully set the desk lamp in the office to on."}
+            ]
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "name": "set_device_status",
+                "args": {
+                  "location": "office",
+                  "device_id": "desk lamp",
+                  "status": "ON"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "eval_id": "bedroom_light_off",
+      "conversation": [
+        {
+          "user_content": {
+            "parts": [{"text": "Turn off the ceiling light in the bedroom"}]
+          },
+          "final_response": {
+            "parts": [
+              {"text": "Successfully set the ceiling light in the bedroom to off."}
+            ]
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "name": "set_device_status",
+                "args": {
+                  "location": "bedroom",
+                  "device_id": "ceiling light",
+                  "status": "OFF"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
